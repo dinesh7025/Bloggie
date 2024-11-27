@@ -1,6 +1,8 @@
+using System.Text.Json;
 using Bloggie.web.Data;
 using Bloggie.web.Models.Domains;
 using Bloggie.web.Models.ViewModels;
+using Bloggie.web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,12 +10,15 @@ namespace Bloggie.web.Pages.Admin.Blogs
 {
     public class AddModel : PageModel
     {
+        private readonly IBlogPostrepository blogPostrepository;
+
         [BindProperty]
         public AddBlogPost AddBlogPostRequest { get; set; }
-        private readonly BloggieDbContext _bloggieDbContext;
-        public AddModel( BloggieDbContext bloggieDbContext)
+
+       
+        public AddModel(IBlogPostrepository blogPostrepository)
         {
-            _bloggieDbContext = bloggieDbContext;   
+            this.blogPostrepository = blogPostrepository;
         }
         public void OnGet()
         {
@@ -34,11 +39,18 @@ namespace Bloggie.web.Pages.Admin.Blogs
                 Visible = AddBlogPostRequest.Visible
             };
 
-            //Add to database using Context
-           await _bloggieDbContext.BlogPosts.AddAsync(newBlogPost);
+            //call from repo
+            await blogPostrepository.AddAsync(newBlogPost);
 
-            //Save the chnages to DB
-            await _bloggieDbContext.SaveChangesAsync();
+            //Generic Message Display
+            var notification = new Notification
+            {
+                Message = $"New Blog Post for &apos;<strong>{newBlogPost.Heading}</strong>&apos; created successfully!",
+                Type = NotificationType.Success
+            };
+            //for message display after successfull add
+            TempData["Notification"] = JsonSerializer.Serialize(notification);  
+       
             return RedirectToPage("/Admin/Blogs/List");
         }
     }

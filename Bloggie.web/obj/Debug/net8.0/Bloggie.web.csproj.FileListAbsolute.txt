@@ -170,3 +170,4 @@ D:\Bloggie\Bloggie\Bloggie.web\obj\Debug\net8.0\Bloggie.web.pdb
 D:\Bloggie\Bloggie\Bloggie.web\obj\Debug\net8.0\Bloggie.web.genruntimeconfig.cache
 D:\Bloggie\Bloggie\Bloggie.web\obj\Debug\net8.0\ref\Bloggie.web.dll
 D:\Bloggie\Bloggie\Bloggie.web\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\Bloggie\Bloggie\Bloggie.web\obj\Debug\net8.0\Bloggie.web.sourcelink.json
