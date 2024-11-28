@@ -29,6 +29,10 @@
 				<input type="text" class="form-control" id="shortDescription" asp-for="AddBlogPostRequest.ShortDescription">
 			</div>
 			<div class="mb-3">
+				<label for ="featuredImageUpload"class="form-label">Featured Image Upload</label>
+				<input type="file" id="featuredImageUpload" asp-for="FeaturedImage"/>
+			</div>
+			<div class="mb-3">
 				<label for="featuredImageUrl" class="form-label">Featured ImageUrl</label>
 				<input type="text" class="form-control" id="featuredImageUrl" asp-for="AddBlogPostRequest.FeaturedImageUrl">
 			</div>
@@ -61,6 +65,8 @@
 @section Scripts{
 	<script>
 		var editor = new FroalaEditor('#content');
+
+		const featuredImageUploadElement = document.getElementById('#featuredImageUpload')
 	</script>
 }
 

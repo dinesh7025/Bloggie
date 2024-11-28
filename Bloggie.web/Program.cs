@@ -10,6 +10,7 @@ builder.Services.AddDbContext<BloggieDbContext>(options =>
 
 //Add repository Services
 builder.Services.AddScoped<IBlogPostrepository, BlogPostRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepositoryCloudinary>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
