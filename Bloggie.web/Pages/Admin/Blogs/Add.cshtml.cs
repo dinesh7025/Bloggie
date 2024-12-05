@@ -16,8 +16,10 @@ namespace Bloggie.web.Pages.Admin.Blogs
         public AddBlogPost AddBlogPostRequest { get; set; }
         [BindProperty]
         public IFormFile FeaturedImage { get; set; }
+        [BindProperty]
+        public string Tags { get; set; }
 
-       
+
         public AddModel(IBlogPostrepository blogPostrepository)
         {
             this.blogPostrepository = blogPostrepository;
@@ -38,7 +40,9 @@ namespace Bloggie.web.Pages.Admin.Blogs
                 UrlHandle = AddBlogPostRequest.UrlHandle,
                 PublishedDate = AddBlogPostRequest.PublishedDate,
                 Author = AddBlogPostRequest.Author,
-                Visible = AddBlogPostRequest.Visible
+                Visible = AddBlogPostRequest.Visible,
+                Tags = new List<Tag>(Tags.Split(',').Select(t => new Tag() { Name = t.Trim()} ))
+
             };
 
             //call from repo

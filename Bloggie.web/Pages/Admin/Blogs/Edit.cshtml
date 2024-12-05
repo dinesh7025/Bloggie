@@ -33,6 +33,16 @@
 					<label for="shortDescription" class="form-label">Short Description</label>
 					<input type="text" class="form-control" id="shortDescription" asp-for="BlogPost.ShortDescription">
 				</div>
+					<div class="mb-3">
+						<label for="featuredImageUpload" class="form-label">Featured Image Upload</label>
+						<input type="file" id="featuredImageUpload" asp-for="FeaturedImage" />
+						@if(Model.BlogPost.FeaturedImageUrl != null){
+							<img src="@Model.BlogPost.FeaturedImageUrl" style="width:300px;" id="featuredImageDisplay" />
+						}
+						else{
+							<img src="" style=" display:none; width:300px;" id="featuredImageDisplay" />
+						}
+					</div>
 				<div class="mb-3">
 					<label for="featuredImageUrl" class="form-label">Featured ImageUrl</label>
 					<input type="text" class="form-control" id="featuredImageUrl" asp-for="BlogPost.FeaturedImageUrl">
@@ -49,6 +59,10 @@
 					<label for="author" class="form-label">Author</label>
 					<input type="text" class="form-control" id="author" asp-for="BlogPost.Author">
 				</div>
+					<div class="mb-3">
+						<label for="tags" class="form-label">Tags(Comma Separated)</label>
+						<input type="text" class="form-control" id="tags" asp-for="Tags" />
+					</div>
 				<div class="form-check mb-3">
 					<input class="form-check-input" type="checkbox" id="isVisible">
 					<label class="form-check-label" for="isVisible" asp-for="BlogPost.Visible">
@@ -73,6 +87,34 @@ else{
 
 	@section Scripts {
 		<script>
-			var editor = new FroalaEditor('#content');
+			var editor = new FroalaEditor('#content',{
+				imageUploadURL:'/api/images'
+			});
+
+			const featuredImageUploadElement = document.getElementById('featuredImageUpload');
+			const featuredImageUrlElement = document.getElementById('featuredImageUrl');
+			const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+			async function imageUpload(e){
+				console.log(e.target.files[0]);
+
+				let data = new FormData();
+				data.append('file', e.target.files[0]);
+
+				await fetch('/api/images',{
+					method: 'POST',
+					headers:{
+						'Accept': '*/*'
+					},
+					body: data
+				}).then(response => response.json())
+				.then(result => {
+					featuredImageUrlElement.value = result.link;
+					featuredImageDisplayElement.style.display = 'block';
+					featuredImageDisplayElement.src = result.link;
+				});
+			}
+
+			featuredImageUploadElement.addEventListener('change',imageUpload);
 		</script>
 	}

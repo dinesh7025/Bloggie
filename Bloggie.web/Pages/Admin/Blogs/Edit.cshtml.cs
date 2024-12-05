@@ -14,6 +14,10 @@ namespace Bloggie.web.Pages.Admin.Blogs
 
         [BindProperty]
         public BlogPost BlogPost { get; set; }
+        [BindProperty]
+        public IFormFile FeaturedImage { get; set; }
+        [BindProperty]
+        public string Tags { get; set; }
         public EditModel(IBlogPostrepository blogPostrepository)
         {
             this.blogPostrepository = blogPostrepository;
@@ -21,11 +25,17 @@ namespace Bloggie.web.Pages.Admin.Blogs
         public async Task OnGet(Guid id)
         {
             BlogPost = await blogPostrepository.GetAsync(id);
+
+            if (BlogPost.Tags != null) {
+                Tags = string.Join(",", BlogPost.Tags.Select(x=>x.Name));
+            }
+
         }
         public async Task<IActionResult> OnPostEdit()
         {
             try
             {
+                BlogPost.Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag() { Name = x.Trim()}));
                 var updatedBlog = await blogPostrepository.UpdateAsync(BlogPost);
 
                 ViewData["Notification"] = new Notification
