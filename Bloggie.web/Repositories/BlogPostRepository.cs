@@ -65,7 +65,7 @@ namespace Bloggie.web.Repositories
                 existingBlogPost.PublishedDate = blogPost.PublishedDate;
                 existingBlogPost.Visible = blogPost.Visible;
                 
-                if(existingBlogPost.Tags != null && existingBlogPost.Tags.Any())
+                if(blogPost.Tags != null && blogPost.Tags.Any())
                 {
                     //Delete existing tags and add updated
                     _bloggieDbContext.Tags.RemoveRange(existingBlogPost.Tags);
@@ -77,6 +77,13 @@ namespace Bloggie.web.Repositories
 
             await _bloggieDbContext.SaveChangesAsync();
             return existingBlogPost;
+        }
+
+        public async Task<IEnumerable<BlogPost>> GetAllAsync(string tagName)
+        {
+            return await (_bloggieDbContext.BlogPosts.Include(nameof(BlogPost.Tags))
+                .Where(x => x.Tags.Any(x=>x.Name == tagName)))
+                .ToListAsync();
         }
     }
 }

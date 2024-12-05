@@ -14,6 +14,15 @@
 					<span class="text-secondary">Author: @Model.BlogPost.Author</span>
 					<span class="text-secondary">Published On: @Model.BlogPost.PublishedDate.ToShortDateString()</span>
 				</div>
+				<div class="mb-3">
+					@if(Model.BlogPost.Tags != null){
+						foreach( var tags in Model.BlogPost.Tags){
+							<a href="/tags/@tags.Name">
+								<span class="badge bg-dark">@tags.Name</span>
+							</a>
+						}
+					}
+				</div>
 
 				<img src="@Model.BlogPost.FeaturedImageUrl" class="d-block img-fluid mb-3"/>
 
