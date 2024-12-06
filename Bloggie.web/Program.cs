@@ -27,6 +27,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 }
 );
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Login";
+});
 //Add repository Services
 builder.Services.AddScoped<IBlogPostrepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepositoryCloudinary>();

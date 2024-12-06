@@ -31,13 +31,18 @@ namespace Bloggie.web.Pages
 
             if (identityResult.Succeeded)
             {
-                ViewData["Notification"] = new Notification
+                var addToRoleResult = await userManager.AddToRoleAsync(user, "User");
+                if (addToRoleResult.Succeeded)
                 {
-                    Type = NotificationType.Success,
-                    Message = "User Registration Successfull"
-                };
+                    ViewData["Notification"] = new Notification
+                    {
+                        Type = NotificationType.Success,
+                        Message = "User Registration Successfull"
+                    };
 
-                return Page();
+                    return Page();
+                }
+           
             }
             //If fails
             ViewData["Notification"] = new Notification

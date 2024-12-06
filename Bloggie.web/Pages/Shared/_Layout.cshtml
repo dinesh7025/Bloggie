@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,7 +21,7 @@
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Bloggie.web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -28,7 +31,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                             aria-expanded="false" id="navDropdownForAdmin"> 
+                            aria-expanded="false" id="navDropdownForAdmin"> 
                                 Admin
                             </a>
                             <ul class="dropdown-menu " aria-labelledby="navDropdownForAdmin">
@@ -41,9 +44,19 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="d-flex">
-                        <a href="/login" class="btn btn-light text-dark me-3">Login</a>
-                        <a href="/register" class="btn btn-light text-dark me-3">Register</a>
+                    <div class="d-flex align-items-center">
+
+                        @if(signInManager.IsSignedIn(User)){
+                            <div class="me-3 text-light">
+                                @User?.Identity?.Name
+                            </div>
+                            <a href="/logout" class="btn btn-light text-dark me-3">Logout</a>
+                        }
+                        else{
+                            <a href="/login" class="btn btn-light text-dark me-3">Login</a>
+                            <a href="/register" class="btn btn-light text-dark me-3">Register</a>
+                        }
+    
                     </div>
                 </div>
             </div>
