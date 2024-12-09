@@ -4,13 +4,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Bloggie.web.2owpdop1h8.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"2owpdop1h8"},{"Name":"integrity","Value":"sha256-os7G8mf02ngYo1bWwRB\u002BaecEYBcvu\u002B50/RppDjRY\u002Bzw="},{"Name":"label","Value":"_content/Bloggie.web/Bloggie.web.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1129"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022os7G8mf02ngYo1bWwRB\u002BaecEYBcvu\u002B50/RppDjRY\u002Bzw=\u0022"},{"Name":"Last-Modified","Value":"Thu, 05 Dec 2024 06:00:24 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1129"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022os7G8mf02ngYo1bWwRB\u002BaecEYBcvu\u002B50/RppDjRY\u002Bzw=\u0022"},{"Name":"Last-Modified","Value":"Mon, 09 Dec 2024 05:17:44 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Bloggie.web/Bloggie.web.bundle.scp.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Bloggie.web.2owpdop1h8.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-os7G8mf02ngYo1bWwRB\u002BaecEYBcvu\u002B50/RppDjRY\u002Bzw="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1129"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022os7G8mf02ngYo1bWwRB\u002BaecEYBcvu\u002B50/RppDjRY\u002Bzw=\u0022"},{"Name":"Last-Modified","Value":"Thu, 05 Dec 2024 06:00:24 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1129"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022os7G8mf02ngYo1bWwRB\u002BaecEYBcvu\u002B50/RppDjRY\u002Bzw=\u0022"},{"Name":"Last-Modified","Value":"Mon, 09 Dec 2024 05:17:44 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Bloggie.web/css/site.9h94lh8cnb.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>

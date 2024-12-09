@@ -3,11 +3,13 @@ using Bloggie.web.Data;
 using Bloggie.web.Models.Domains;
 using Bloggie.web.Models.ViewModels;
 using Bloggie.web.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Bloggie.web.Pages.Admin.Blogs
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly IBlogPostrepository blogPostrepository;

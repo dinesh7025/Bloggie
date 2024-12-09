@@ -1,5 +1,7 @@
 ﻿@page "/blog/{urlHandle}"
 @model Bloggie.web.Pages.Blogs.DetailsModel
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> userManager
 @{
 	ViewData["Title"] = Model.BlogPost.PageTitle;
 }
@@ -7,16 +9,28 @@
 <div class="container my-5">
 	<div class="row justify-content-center">
 		<div class="col-12 col-lg-6">
-			@if(Model.BlogPost != null){
+			@if (Model.BlogPost != null)
+			{
 				<h1 class="mb-3 ">@Model.BlogPost.Heading</h1>
 
 				<div class="d-flex justify-content-between mb-3">
-					<span class="text-secondary">Author: @Model.BlogPost.Author</span>
+					<span class="text-seconinnerHTML)>Author: @Model.BlogPost.Author</span>
 					<span class="text-secondary">Published On: @Model.BlogPost.PublishedDate.ToShortDateString()</span>
 				</div>
+
 				<div class="mb-3">
-					@if(Model.BlogPost.Tags != null){
-						foreach( var tags in Model.BlogPost.Tags){
+					<span>
+						<a id="btnLike" style="cursor:pointer">
+							<i class="bi bi-hand-thumbs-up"></i>
+						</a>
+						<span id="totalLikes">@Model.TotalLikes</span> Likes
+					</span>
+				</div>
+				<div class="mb-3">
+					@if (Model.BlogPost.Tags != null)
+					{
+						foreach (var tags in Model.BlogPost.Tags)
+						{
 							<a href="/tags/@tags.Name">
 								<span class="badge bg-dark">@tags.Name</span>
 							</a>
@@ -24,16 +38,54 @@
 					}
 				</div>
 
-				<img src="@Model.BlogPost.FeaturedImageUrl" class="d-block img-fluid mb-3"/>
+				<img src="@Model.BlogPost.FeaturedImageUrl" class="d-block img-fluid mb-3" />
 
 				<div class="mb-3 blog-details">
 					@Html.Raw(Model.BlogPost.Content)
 				</div>
 			}
-			else{
+			else
+			{
 				<h2> Error in Getting Blog Details!</h2>
 			}
 		</div>
 	</div>
 
 </div>
+
+@section Scripts{
+	<script>
+		const btnLike = document.getElementById('btnLike');
+		const totalLikesElement = document.getElementById('totalLikes');
+
+		async function getTotalLikes(){
+			fetch('/api/blogpostlike/@Model.BlogPost.Id/totalLikes',{
+				method:'GET',
+				headers:{
+					'Content-Type':'application/json',
+					'Accept' : '*/*'
+				}
+			})
+			.then(data => data.json())
+			.then(result => totalLikesElement.innerHTML = result);
+		}
+
+		async function addLikeToPost(){
+			fetch('/api/blogpostlike/add',{
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json',
+					'Accept' : '*/*'
+				},
+				body: JSON.stringify({blogPostId: '@Model.BlogPost.Id', userId: '@userManager.GetUserId(User)'})
+			})
+			.then(() =>{
+				btnLike.innerHTML = '<i class="bi bi-hand-thumbs-up-fill"></i>';
+				btnLike.removeEventListener('click',addLikeToPost);
+				getTotalLikes();
+			});
+		}
+
+		btnLike.addEventListener('click',addLikeToPost)
+	</script>
+}

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Bloggie.web.Pages.Admin.Blogs
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class AddModel : PageModel
     {
         private readonly IBlogPostrepository blogPostrepository;

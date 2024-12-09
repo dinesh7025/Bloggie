@@ -30,11 +30,13 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
 });
 //Add repository Services
 builder.Services.AddScoped<IBlogPostrepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepositoryCloudinary>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

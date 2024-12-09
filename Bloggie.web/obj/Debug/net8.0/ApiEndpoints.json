@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "Bloggie.web.Controllers.BlogPostLikeController",
+    "Method": "GetTotalLikes",
+    "RelativePath": "api/BlogPostLike/{blogPostid}/totalLikes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogPostId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bloggie.web.Controllers.BlogPostLikeController",
+    "Method": "AddLike",
+    "RelativePath": "api/BlogPostLike/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "addBlogPostLikeRequest",
+        "Type": "Bloggie.web.Models.ViewModels.AddBlogPostLikeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Bloggie.web.Controllers.ImagesController",
     "Method": "UploadAsync",
     "RelativePath": "api/Images",
