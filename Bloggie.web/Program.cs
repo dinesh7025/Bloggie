@@ -37,6 +37,8 @@ builder.Services.AddScoped<IBlogPostrepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepositoryCloudinary>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
+builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
+builder.Services.AddScoped<IUserrepository, UserRepository>();  
 
 // Add services to the container.
 builder.Services.AddRazorPages();

@@ -2,6 +2,7 @@
 @model Bloggie.web.Pages.Blogs.DetailsModel
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> userManager
+@inject SignInManager<IdentityUser> signInManager
 @{
 	ViewData["Title"] = Model.BlogPost.PageTitle;
 }
@@ -20,9 +21,21 @@
 
 				<div class="mb-3">
 					<span>
-						<a id="btnLike" style="cursor:pointer">
-							<i class="bi bi-hand-thumbs-up"></i>
-						</a>
+						@if(signInManager.IsSignedIn(User)){
+							@if (Model.Liked)
+							{
+								<a style="cursor:pointer">
+									<i class="bi bi-hand-thumbs-up-fill"></i>
+								</a>
+							}
+							else
+							{
+								<a id="btnLike" style="cursor:pointer">
+									<i class="bi bi-hand-thumbs-up"></i>
+								</a>
+							}
+						}
+
 						<span id="totalLikes">@Model.TotalLikes</span> Likes
 					</span>
 				</div>
@@ -42,6 +55,54 @@
 
 				<div class="mb-3 blog-details">
 					@Html.Raw(Model.BlogPost.Content)
+				</div>
+
+				<div class="card">
+					<div class="card-header">
+						<h5>Commments</h5>
+
+						@if (signInManager.IsSignedIn(User)){
+
+							<form method="post">
+								<div class="mb-3">
+									<label class="form-control">Comment Description</label>
+									<input type="text" class="form-control" asp-for="Description"/>
+								</div>
+								<div class="mb-3">
+									<button type="submit" class="btn btn-dark">Post</button>
+									<input type="hidden" asp-for ="BlogPostId" />
+								</div>
+							</form>
+						}
+
+					</div>
+					<div class="card-body">
+						
+						@if (Model.BlogComments != null && Model.BlogComments.Any()){
+
+							@foreach(var comment in Model.BlogComments){
+								<div class="card mb-3">
+									<div class="card-body">
+										<div>
+											@comment.Description
+										</div>
+										<div class="d-flex justify-content-between">
+											<span class="text-secondary">@comment.Username</span>
+											<span class="text-secondary">@comment.DateAdded.ToShortDateString()</span>
+										</div>
+
+									</div>
+
+
+								</div>
+							}
+
+						}
+						else{
+							<p> No Comments! Be first to add one. </p>
+						}
+
+					</div>
 				</div>
 			}
 			else
