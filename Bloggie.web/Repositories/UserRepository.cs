@@ -18,10 +18,10 @@ namespace Bloggie.web.Repositories
 
         public async Task<bool> Add(IdentityUser identityUser, string password, List<string> roles)
         {
-           var identityResult =  await userManager.CreateAsync(identityUser, password);
+            var identityResult = await userManager.CreateAsync(identityUser, password);
 
-            if (identityResult.Succeeded) 
-            { 
+            if (identityResult.Succeeded)
+            {
                 identityResult = await userManager.AddToRolesAsync(identityUser, roles);
 
                 if (identityResult.Succeeded)
@@ -43,6 +43,16 @@ namespace Bloggie.web.Repositories
             }
 
             return users;
+        }
+
+        public async Task Delete(Guid id)
+        {
+            var selectedUser = await userManager.FindByIdAsync(id.ToString());
+
+            if (selectedUser != null)
+            {
+                await userManager.DeleteAsync(selectedUser);
+            }
         }
     }
 }

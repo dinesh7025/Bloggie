@@ -19,28 +19,37 @@
 		</button>
 
 	</div>
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Email</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			@foreach (var user in Model.Users)
-			{
+	<form method="post" asp-page-handler ="delete" id="deleteUserForm">
+		<table class="table">
+			<thead>
 				<tr>
-					<td>@user.Id</td>
-					<td>@user.Username</td>
-					<td>@user.Email</td>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Action</th>
 				</tr>
-			}
-		</tbody>
+			</thead>
 
-	</table>
+			<tbody>
+				@foreach (var user in Model.Users)
+				{
+					<tr>
+						<td>@user.Id</td>
+						<td>@user.Username</td>
+						<td>@user.Email</td>
+						<td>
+							<a class="btn btn-danger user-delete-btn" data-id="@user.Id">
+								Delete
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+
+		</table>
+		<input type="hidden" asp-for="SelectedUserId" id="selectedUserId" />
+	</form>
+	
 
 </div>
 
@@ -56,17 +65,20 @@
 				<div class="modal-body">
 					<div class="mb-3">
 						<label class="form-label">Username</label>
-						<input type="text" class="form-control" asp-for="AddUserRequest.Username" />
+						<input type="text" class="form-control" asp-for="AddUserRequest.Username" required/>
+						<span class="text-danger" asp-validation-for="AddUserRequest.Username"></span>
 					</div>
 
 					<div class="mb-3">
 						<label class="form-label">Email</label>
-						<input type="email" class="form-control" asp-for="AddUserRequest.Email" />
+						<input type="email" class="form-control" asp-for="AddUserRequest.Email" required/>
+						<span class="text-danger" asp-validation-for="AddUserRequest.Email"></span>
 					</div>
 
 					<div class="mb-3">
 						<label class="form-label">Password</label>
-						<input type="password" class="form-control" asp-for="AddUserRequest.Password" />
+						<input type="password" class="form-control" asp-for="AddUserRequest.Password" required minlength="6"/>
+						<span class="text-danger" asp-validation-for="AddUserRequest.Password"></span>
 					</div>
 
 					<div class="mb-3">
@@ -83,7 +95,7 @@
 						{
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox"
-									   value="Admin" asp-for="AddUserRequest.AdminCheckBox">
+									   asp-for="AddUserRequest.AdminCheckBox">
 								<label class="form-check-label" for="flexCheckChecked">
 									Admin Role
 								</label>
@@ -101,3 +113,24 @@
 		</div>
 	</div>
 </form>
+
+
+@section Scripts{
+
+	<script>
+		const userDeleteElement = document.querySelectorAll('.user-delete-btn');
+		const selectedUserIdElement = document.getElementById('selectedUserId');
+		const deleteUserFormElement = document.getElementById('deleteUserForm');
+
+		userDeleteElement.forEach((element) => {
+
+			element.addEventListener('click',function(){
+				const userId = element.dataset.id;
+				selectedUserIdElement.value = userId;
+				console.log(userId);
+				deleteUserFormElement.submit();
+			} )
+
+		})
+	</script>
+}

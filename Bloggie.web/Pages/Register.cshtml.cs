@@ -21,36 +21,44 @@ namespace Bloggie.web.Pages
         }
         public async Task<IActionResult> OnPost()
         {
-            var user = new IdentityUser
+            if (ModelState.IsValid)
             {
-                UserName = RegisterViewModel.Username,
-                Email = RegisterViewModel.Email
-            };
-
-            var identityResult = await userManager.CreateAsync(user, RegisterViewModel.Password);
-
-            if (identityResult.Succeeded)
-            {
-                var addToRoleResult = await userManager.AddToRoleAsync(user, "User");
-                if (addToRoleResult.Succeeded)
+                var user = new IdentityUser
                 {
-                    ViewData["Notification"] = new Notification
-                    {
-                        Type = NotificationType.Success,
-                        Message = "User Registration Successfull"
-                    };
+                    UserName = RegisterViewModel.Username,
+                    Email = RegisterViewModel.Email
+                };
 
-                    return Page();
+                var identityResult = await userManager.CreateAsync(user, RegisterViewModel.Password);
+
+                if (identityResult.Succeeded)
+                {
+                    var addToRoleResult = await userManager.AddToRoleAsync(user, "User");
+                    if (addToRoleResult.Succeeded)
+                    {
+                        ViewData["Notification"] = new Notification
+                        {
+                            Type = NotificationType.Success,
+                            Message = "User Registration Successfull"
+                        };
+
+                        return Page();
+                    }
+
                 }
-           
+                //If fails
+                ViewData["Notification"] = new Notification
+                {
+                    Type = NotificationType.Error,
+                    Message = "Something Went Wrong, Try Again!"
+                };
+                return Page();
             }
-            //If fails
-            ViewData["Notification"] = new Notification
+            else
             {
-                Type = NotificationType.Error,
-                Message = "Something Went Wrong, Try Again!"
-            };
-            return Page();
+                return Page();
+            }
+            
         }
     }
 }

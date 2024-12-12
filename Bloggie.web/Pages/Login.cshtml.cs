@@ -21,25 +21,32 @@ namespace Bloggie.web.Pages
 
         public async Task<IActionResult> OnPost(string returnUrl)
         {
-           var signInresult =  await signInManager.PasswordSignInAsync(
-                LoginViewModel.Username, LoginViewModel.Password, false, false);
-            if (signInresult.Succeeded)
+
+            if (!ModelState.IsValid)
             {
-                if (!string.IsNullOrWhiteSpace(returnUrl))
+                var signInresult = await signInManager.PasswordSignInAsync(
+               LoginViewModel.Username, LoginViewModel.Password, false, false);
+                if (signInresult.Succeeded)
                 {
-                    return RedirectToPage(returnUrl);
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return RedirectToPage(returnUrl);
+                    }
+                    return RedirectToPage("Index");
                 }
-                return RedirectToPage("Index");
-            }
-            else 
-            {
-                ViewData["Notification"] = new Notification
+                else
                 {
-                    Type = NotificationType.Error,
-                    Message = "Unable to Login. Please check your credentials!"
-                };
-                return Page();
+                    ViewData["Notification"] = new Notification
+                    {
+                        Type = NotificationType.Error,
+                        Message = "Unable to Login. Please check your credentials!"
+                    };
+                    return Page();
+                }
             }
+
+            return Page();
+          
             
         }
     }
